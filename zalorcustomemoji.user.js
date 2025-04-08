@@ -125,6 +125,14 @@
 		
 		buttonContainer.appendChild(cancelButton);
 		buttonContainer.appendChild(confirmButton);
+
+		
+		// key down event enter for input
+		input.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") {
+				confirmButton.click()
+			}
+		});
 		
 		popup.appendChild(title);
 		popup.appendChild(inputContainer);
@@ -269,7 +277,7 @@
 												const customReaction = {
 													...react,
 													icon: customText,
-													type: 103 
+													type: customText
 												};
 												
 												sendReaction(wrapper, id, customReaction);

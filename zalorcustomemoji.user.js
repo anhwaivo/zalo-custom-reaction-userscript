@@ -250,7 +250,6 @@
 			.reaction-emoji-list {
 				display: flex !important;
 				width: fit-content !important; /* Wider emoji list */
-				justify-content: center !important;
 				gap: 2px !important;
 				border-radius: 28px !important;
 				background-color: white !important;
@@ -268,6 +267,13 @@
 				transition: transform 0.2s, background-color 0.2s !important;
 			}
 			
+			.reaction-emoji-text {
+				white-space: nowrap !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+				max-width: 3ch !important;
+			}
+	
 			.reaction-emoji-icon:hover {
 				transform: scale(1.1) !important;
 				background-color: #e3f2fd !important;
@@ -308,6 +314,10 @@
 								const div = document.createElement("div");
 								const divEmoji = document.createElement("span");
 								div.className = "reaction-emoji-icon";
+								if (react.icon.length > 2) {
+									div.className += " reaction-emoji-text";
+								}
+
 								div.setAttribute("data-custom", "true");
 								div.style.animationDelay = `${50 * (idx + 7)}ms`;
 								
@@ -315,6 +325,9 @@
 									divEmoji.innerText = react.icon;
 									div.title = "Gửi reaction tùy chỉnh";
 								} else {
+									if (react.icon.length > 2) {
+										div.title = react.icon;
+									}
 									divEmoji.innerText = react.icon;
 								}
 								
@@ -474,6 +487,7 @@
 			pointer-events: none;
 			opacity: 0;
 			animation: fadeIn 0.2s forwards;
+			z-index: 9999;
 		}
 	`;
 	document.head.appendChild(style);

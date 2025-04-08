@@ -17,7 +17,6 @@
 		{type: 102, icon: "💬", name: "text", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%"}
 	];
 
-	// Create text input popup
 	const createTextInputPopup = () => {
 		const popup = document.createElement("div");
 		popup.id = "custom-text-reaction-popup";
@@ -50,7 +49,7 @@
 		input.type = "text";
 		input.id = "custom-text-reaction-input";
 		input.placeholder = "Nhập nội dung reaction...";
-		input.maxLength = 15; // Tăng độ dài tối đa
+		input.maxLength = 15; 
 		input.style.cssText = `
 			padding: 10px 12px;
 			border: 2px solid #e0e0e0;
@@ -174,7 +173,6 @@
 		};
 	};
 
-	// Enlarge the reaction panel
 	const enhanceReactionPanel = () => {
 		const style = document.createElement("style");
 		style.textContent = `
@@ -235,7 +233,6 @@
 							const btn = wrapper.querySelector('[id^="reaction-btn-"]');
 							const id = btn?.id.replace("reaction-btn-", "");
 							
-							// Add animation to the reaction panel
 							list.style.animation = "popIn 0.3s ease-out forwards";
 							
 							reactions.forEach((react, idx) => {
@@ -261,24 +258,21 @@
 									e.stopPropagation();
 									
 									if (react.name === "text") {
-										// Show text input popup for text reaction
 										if (!window.textInputPopup) {
 											window.textInputPopup = createTextInputPopup();
 										}
 										
 										window.textInputPopup.show();
 										
-										// Store the current context
 										window.currentReactionContext = { wrapper, id };
 										
-										// Set up confirmation action
 										window.textInputPopup.confirmButton.onclick = () => {
 											const customText = window.textInputPopup.input.value.trim();
 											if (customText) {
 												const customReaction = {
 													...react,
 													icon: customText,
-													type: 103 // Unique type for custom text reactions
+													type: 103 
 												};
 												
 												sendReaction(wrapper, id, customReaction);
@@ -289,7 +283,6 @@
 										return;
 									}
 									
-									// For non-text reactions
 									sendReaction(wrapper, id, react);
 								});
 							});
@@ -333,14 +326,12 @@
 		if (span) {
 			span.innerHTML = "";
 			
-			// For text reactions, display the actual text
 			if (react.name === "text" || typeof react.icon === "string" && react.icon.length > 2) {
 				const textContainer = document.createElement("div");
 				textContainer.className = "text-reaction";
 				textContainer.textContent = react.icon;
 				span.appendChild(textContainer);
 			} else {
-				// For emoji reactions
 				const emoji = document.createElement("span");
 				if (react.class) {
 					emoji.className = react.class;

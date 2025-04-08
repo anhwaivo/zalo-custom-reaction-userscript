@@ -12,6 +12,11 @@
 
 (function() {
 "use strict";
+
+	const settings = {
+		isRecently: false
+	}
+
 	const reactions = [
 		{
 			type: 100,
@@ -37,6 +42,43 @@
 		// Thêm emoji: Copy dòng dưới, sửa icon để thêm reaction tuỳ ý (gồm text hoặc emoji),
 		// {type: "<thay icon vào>", icon: "<thay icon vào>", name: "<tên tuỳ ý>", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
 	];
+
+	const RecentlyReaction = {
+		add: function (reaction) {
+			const emojiCustom = {
+				type: reaction,
+				icon: reaction,
+				name: reaction,
+				class: "emoji-sizer emoji-outer",
+				bgPos: "0% 0%",
+			};
+			if (settings.isRecently){
+				reactions[reactions.length - 1] = emojiCustom;
+			}
+			else {
+				reactions.push(emojiCustom);
+			}
+			settings.isRecently = true;
+			localStorage.setItem("recentlyCustomReaction", JSON.stringify(emojiCustom));
+		},
+
+		get: function () {
+			const reaction = localStorage.getItem("recentlyCustomReaction");
+			if (reaction) {
+				return JSON.parse(reaction);
+			}
+			return null;
+		},
+
+		load: function () {
+			const reaction = this.get();
+			if (reaction) {
+				settings.isRecently = true;
+				reactions.push(reaction);
+			}
+		}
+		
+	}
 
 	const createTextInputPopup = () => {
 		const popup = document.createElement("div");
@@ -299,7 +341,7 @@
 													icon: customText,
 													type: customText
 												};
-												
+												RecentlyReaction.add(customText);
 												sendReaction(wrapper, id, customReaction);
 												window.textInputPopup.hide();
 											}
@@ -440,6 +482,7 @@
 		observer.observe(document.body, {childList: true, subtree: true});
 		initReactions();
 		enhanceReactionPanel();
+		RecentlyReaction.load();
 	};
 	"loading" === document.readyState ? document.addEventListener("DOMContentLoaded", init) : init();
 })();

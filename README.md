@@ -1,4 +1,4 @@
-được thêm thanh text box bởi meohunter
+được thêm thanh text box bởi meohunter và tối ưu lại
 ## HDSD
 
 1. Cài một trong hai trình chạy userscript:

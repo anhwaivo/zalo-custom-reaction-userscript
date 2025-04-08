@@ -307,9 +307,6 @@
 						if (wrapper) {
 							const btn = wrapper.querySelector('[id^="reaction-btn-"]');
 							const id = btn?.id.replace("reaction-btn-", "");
-							
-							list.style.animation = "popIn 0.3s ease-out forwards";
-							
 							reactions.forEach((react, idx) => {
 								const div = document.createElement("div");
 								const divEmoji = document.createElement("span");
@@ -405,23 +402,10 @@
 		const span = document.querySelector(`#reaction-btn-${id} span`);
 		if (span) {
 			span.innerHTML = "";
-			
-			if (react.name === "text" || typeof react.icon === "string" && react.icon.length > 2) {
-				const textContainer = document.createElement("div");
-				textContainer.className = "text-reaction";
-				textContainer.textContent = react.icon;
-				span.appendChild(textContainer);
-			} else {
-				const emoji = document.createElement("span");
-				if (react.class) {
-					emoji.className = react.class;
-					emoji.style.cssText = `background: url("assets/emoji.1e7786c93c8a0c1773f165e2de2fd129.png?v=20180604") ${react.bgPos} / 5100% no-repeat; margin: -1px; position: relative; top: 2px`;
-				} else {
-					emoji.textContent = react.icon;
-					emoji.style.fontSize = "20px";
-				}
-				span.appendChild(emoji);
-			}
+			const emoji = document.createElement("span");
+			emoji.className = react.class;
+			emoji.style.cssText = `background: url("assets/emoji.1e7786c93c8a0c1773f165e2de2fd129.png?v=20180604") ${react.bgPos} / 5100% no-repeat; margin: -1px; position: relative; top: 2px`;
+			span.appendChild(emoji);
 		}
 	}
 
@@ -435,6 +419,9 @@
 
 	const style = document.createElement("style");
 	style.textContent = `
+		.reaction-emoji-list { display: flex !important; max-width: 300px !important; justify-content: center !important; }
+		.emoji-list-wrapper { width: auto !important; transition: opacity 0.2s ease-in-out !important; }
+		.reaction-emoji-icon:hover { transform: scale(1.2) !important; transition: transform 0.2s ease-in-out !important; }
 		[data-custom="true"] { position: relative; }
 		[data-custom="true"]::after { 
 			content: ''; 

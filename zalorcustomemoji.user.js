@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Zalo Custom Reactions with Text Input
-// @version      1.6
+// @version      1.7
 // @description  Zalo web custom reaction with improved UI for text input
 // @author       Anhwaivo (improved) , Meohunter ( text Box )
 // @match        https://*.zalo.me/*

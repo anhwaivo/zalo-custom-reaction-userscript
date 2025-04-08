@@ -179,11 +179,10 @@
 		style.textContent = `
 			.reaction-emoji-list {
 				display: flex !important;
-				max-width: 350px !important; /* Wider emoji list */
+				width: fit-content !important; /* Wider emoji list */
 				justify-content: center !important;
-				padding: 8px 10px !important;
-				gap: 8px !important;
-				border-radius: 24px !important;
+				gap: 2px !important;
+				border-radius: 28px !important;
 				background-color: white !important;
 				box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
 			}
@@ -192,8 +191,7 @@
 				display: flex !important;
 				align-items: center !important;
 				justify-content: center !important;
-				width: 34px !important;
-				height: 34px !important;
+				font-size: 20px !important;
 				border-radius: 50% !important;
 				cursor: pointer !important;
 				background-color: rgba(240, 240, 240, 0.5) !important;
@@ -201,12 +199,12 @@
 			}
 			
 			.reaction-emoji-icon:hover {
-				transform: scale(1.15) !important;
+				transform: scale(1.1) !important;
 				background-color: #e3f2fd !important;
 			}
 			
 			.emoji-list-wrapper {
-				padding: 3px !important;
+				padding: 0.07rem !important;
 			}
 			
 			@keyframes fadeIn {
@@ -245,11 +243,9 @@
 								
 								if (react.name === "text") {
 									divEmoji.innerText = react.icon;
-									divEmoji.style.cssText = "font-size: 18px;";
-									div.title = "Tạo reaction tùy chỉnh";
+									div.title = "Gửi reaction tùy chỉnh";
 								} else {
 									divEmoji.innerText = react.icon;
-									divEmoji.style.cssText = "font-size: 20px;";
 								}
 								
 								div.appendChild(divEmoji);

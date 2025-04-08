@@ -13,9 +13,29 @@
 (function() {
 "use strict";
 	const reactions = [
-		{type: 100, icon: "👏", name: "clap", class: "emoji-sizer emoji-outer", bgPos: "80% 12.5%"},
-		{type: 101, icon: "🎉", name: "huh", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
-		{type: 102, icon: "🎨", name: "send_custom", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%"}
+		{
+			type: 100,
+			icon: "👏",
+			name: "clap",
+			class: "emoji-sizer emoji-outer",
+			bgPos: "80% 12.5%",
+		},
+		{
+			type: 101,
+			icon: "🎉",
+			name: "huh",
+			class: "emoji-sizer emoji-outer",
+			bgPos: "74% 62.5%",
+		},
+		{
+			type: 102,
+			icon: "🎨",
+			name: "send_custom",
+			class: "emoji-sizer emoji-outer",
+			bgPos: "84% 82.5%",
+		},
+		// Thêm emoji: Copy dòng dưới, sửa icon để thêm reaction tuỳ ý (gồm text hoặc emoji),
+		// {type: "<thay icon vào>", icon: "<thay icon vào>", name: "<tên tuỳ ý>", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
 	];
 
 	const createTextInputPopup = () => {

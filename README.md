@@ -1,5 +1,5 @@
 # Zalo Custom Reaction Userscript
-Đây là project được tạo ra bởi `anhwaivo` dùng để react 1 custom emoji trên nền tảng Zalo Web cùng với <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey</a>
+Đây là project được tạo ra bởi `anhwaivo` dùng để react custom emoji trên nền tảng Zalo Web cùng với <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey</a>
 
 # Hướng dẫn sử dụng
 ## Bước 1. Cài đặt Extension
@@ -27,5 +27,5 @@ Thử với 1 số custom emoji có sẵn từ `anhwaivo`
 # Contributors
 1. [anhwaivo](https://github.com/anhwaivo) - Initial script logic
    - Lời nhắn từ owner: "này nếu có thêm thời gian rảnh (dự định là sẽ có) thì sẽ thêm tính năng custom text ngay trên ui cho ae nhé (còn không thì có người rảnh hơn mở pr thì mình sẽ merge)"
-3. [MeooHunter](https://github.com/MeooHunter) - Add textbox
-4. [kennex666](https://github.com/kennex666) - Fix CSS stuffs
+2. [MeooHunter](https://github.com/MeooHunter) - Add textbox
+3. [kennex666](https://github.com/kennex666) - Fix CSS stuffs

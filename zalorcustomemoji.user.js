@@ -15,7 +15,7 @@
 	const reactions = [
 		{type: 100, icon: "👏", name: "clap", class: "emoji-sizer emoji-outer", bgPos: "80% 12.5%"},
 		{type: 101, icon: "🎉", name: "huh", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
-		{type: 102, icon: "💬", name: "text", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%"}
+		{type: 102, icon: "🎨", name: "send_custom", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%"}
 	];
 
 	const createTextInputPopup = () => {
@@ -241,7 +241,7 @@
 								div.setAttribute("data-custom", "true");
 								div.style.animationDelay = `${50 * (idx + 7)}ms`;
 								
-								if (react.name === "text") {
+								if (react.name === "send_custom") {
 									divEmoji.innerText = react.icon;
 									div.title = "Gửi reaction tùy chỉnh";
 								} else {
@@ -254,7 +254,7 @@
 									e.preventDefault();
 									e.stopPropagation();
 									
-									if (react.name === "text") {
+									if (react.name === "send_custom") {
 										if (!window.textInputPopup) {
 											window.textInputPopup = createTextInputPopup();
 										}

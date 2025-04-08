@@ -47,7 +47,7 @@
 	const RecentlyReaction = {
 		add: function (reaction) {
 			const emojiCustom = {
-				type: reaction,
+				type: simpleHash(reaction),
 				icon: reaction,
 				name: reaction,
 				class: "emoji-sizer emoji-outer",
@@ -80,6 +80,17 @@
 		}
 		
 	}
+
+	// Đồng bộ id cho người dùng script (Emoji sẽ hiện được khi người dùng xài cùng emoji)
+	function simpleHash(str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			hash = (hash << 5) - hash + str.charCodeAt(i);
+			hash |= 0; // convert to 32-bit int
+		}
+		return Math.abs(hash); // chỉ là số, không có chữ
+	}
+
 
 	const createTextInputPopup = () => {
 		const popup = document.createElement("div");
@@ -353,7 +364,7 @@
 												const customReaction = {
 													...react,
 													icon: customText,
-													type: customText
+													type: simpleHash(customText)
 												};
 												RecentlyReaction.add(customText);
 												sendReaction(wrapper, id, customReaction);

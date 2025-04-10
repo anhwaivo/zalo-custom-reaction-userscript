@@ -3,7 +3,8 @@
 // @namespace    https://e-z.bio/anhwaivo
 // @version      2.0
 // @description  Zalo web custom reaction with unlimited text length and emoji picker
-// @author       Anhwaivo, Kennex666 (UI/UX), Meohunter (TextBox), dacsang97 (Emoji Picker)
+// @author       Anhwaivo
+// @maintainer   Kennex666 (UI/UX), Meohunter (TextBox), dacsang97 (Emoji Picker)
 // @match        https://*.zalo.me/*
 // @match        https://chat.zalo.me/*
 // @grant        none
@@ -14,14 +15,12 @@
 (function() {
 	"use strict";
 
-	const settings = {
-		isRecently: false
-	};
+	const settings = { isRecently: false };
 
 	const reactions = [
-		{type: 100, icon: "👏", name: "clap", class: "emoji-sizer emoji-outer", bgPos: "80% 12.5%"},
-		{type: 101, icon: "🎉", name: "huh", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
-		{type: 102, icon: "🎨", name: "send_custom", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%"}
+		{ type: 100, icon: "👏", name: "clap", class: "emoji-sizer emoji-outer", bgPos: "80% 12.5%" },
+		{ type: 101, icon: "🎉", name: "huh", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%" },
+		{ type: 102, icon: "🎨", name: "send_custom", class: "emoji-sizer emoji-outer", bgPos: "84% 82.5%" }
 	];
 
 	const compressChars = {
@@ -53,7 +52,7 @@
 	}
 
 	const RecentlyReaction = {
-		add: function (reaction, originalText) {
+		add: function(reaction, originalText) {
 			const emojiCustom = {
 				type: simpleHash(reaction),
 				icon: reaction,
@@ -70,14 +69,12 @@
 			settings.isRecently = true;
 			localStorage.setItem("recentlyCustomReaction", JSON.stringify(emojiCustom));
 		},
-		get: function () {
+		get: function() {
 			const reaction = localStorage.getItem("recentlyCustomReaction");
-			if (reaction) {
-				return JSON.parse(reaction);
-			}
+			if (reaction) return JSON.parse(reaction);
 			return null;
 		},
-		load: function () {
+		load: function() {
 			const reaction = this.get();
 			if (reaction) {
 				settings.isRecently = true;
@@ -96,19 +93,6 @@
 		"Objects": ["⌚️", "📱", "💻", "⌨️", "🖥", "🖱", "🖨", "🕹", "🗜", "💾", "💿", "📀", "📼", "📷", "📸", "📹", "🎥", "📽", "🎞", "📞", "☎️", "📟", "📠", "📺", "📻", "🎙", "🎚", "🎛", "🧭", "⏱", "⏲", "⏰", "🕰"],
 		"Symbols": ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "💟", "☮️", "✝️", "☪️", "🕉", "☸️", "✡️", "🔯", "🕎", "☯️", "☦️", "🛐", "⛎", "♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️", "🆔", "⚛️"]
 	};
-
-	function insertSpecialCharacters(text) {
-		const zwsp = '\u200B';
-		const zwj = '\u200D';
-		let result = '';
-		for (let i = 0; i < text.length; i++) {
-			result += text[i];
-			if (i < text.length - 1) {
-				result += zwsp;
-			}
-		}
-		return zwj + result + zwj;
-	}
 
 	const createEmojiPicker = () => {
 		const picker = document.createElement("div");
@@ -144,7 +128,6 @@
 			min-height: 36px;
 			align-items: center;
 		`;
-
 		tabsContainer.addEventListener('mousewheel', function(e) {
 			this.scrollLeft += e.deltaY;
 			e.preventDefault();
@@ -152,9 +135,7 @@
 
 		const style = document.createElement('style');
 		style.textContent = `
-			#emoji-picker div::-webkit-scrollbar {
-				display: none;
-			}
+			#emoji-picker div::-webkit-scrollbar { display: none; }
 			.emoji-category-tab {
 				display: flex;
 				align-items: center;
@@ -175,21 +156,14 @@
 			max-height: 240px;
 		`;
 
-		const categoryIcons = {
-			"Smileys": "😀",
-			"Gestures": "👍",
-			"People": "👨",
-			"Animals": "🐱",
-			"Food": "🍔",
-			"Activities": "⚽️",
-			"Objects": "📱",
-			"Symbols": "❤️"
-		};
-
 		Object.keys(emojiCategories).forEach((category, idx) => {
 			const tab = document.createElement("button");
 			tab.className = "emoji-category-tab";
 			tab.dataset.category = category;
+			const categoryIcons = {
+				"Smileys": "😀", "Gestures": "👍", "People": "👨", "Animals": "🐱",
+				"Food": "🍔", "Activities": "⚽️", "Objects": "📱", "Symbols": "❤️"
+			};
 			tab.textContent = categoryIcons[category] || category.slice(0, 1);
 			tab.title = category;
 			tab.style.cssText = `
@@ -208,11 +182,8 @@
 				align-items: center;
 				justify-content: center;
 			`;
-
 			tab.addEventListener("click", () => {
-				document.querySelectorAll(".emoji-category-tab").forEach(t => {
-					t.style.background = "transparent";
-				});
+				document.querySelectorAll(".emoji-category-tab").forEach(t => t.style.background = "transparent");
 				tab.style.background = "#e3f2fd";
 				emojiContent.innerHTML = "";
 				emojiCategories[category].forEach(emoji => {
@@ -239,7 +210,6 @@
 					emojiContent.appendChild(emojiButton);
 				});
 			});
-
 			tabsContainer.appendChild(tab);
 		});
 
@@ -277,7 +247,7 @@
 			display: none;
 			flex-direction: column;
 			gap: 15px;
-			min-width: 320px;
+			min-width: 300px;
 			font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
 			animation: fadeIn 0.2s ease-out;
 		`;
@@ -293,7 +263,7 @@
 		input.type = "text";
 		input.id = "custom-text-reaction-input";
 		input.placeholder = "Nhập nội dung reaction...";
-		input.maxLength = 25;
+		input.maxLength = 25; // Tăng từ 15 lên 25 theo code của bạn
 		input.style.cssText = `
 			padding: 10px 40px 10px 12px;
 			border: 2px solid #e0e0e0;
@@ -304,12 +274,8 @@
 			transition: border-color 0.2s;
 			outline: none;
 		`;
-		input.addEventListener("focus", () => {
-			input.style.borderColor = "#2196F3";
-		});
-		input.addEventListener("blur", () => {
-			input.style.borderColor = "#e0e0e0";
-		});
+		input.addEventListener("focus", () => input.style.borderColor = "#2196F3");
+		input.addEventListener("blur", () => input.style.borderColor = "#e0e0e0");
 
 		const emojiButton = document.createElement("button");
 		emojiButton.id = "emoji-button";
@@ -337,7 +303,6 @@
 		};
 
 		const emojiPicker = createEmojiPicker();
-
 		emojiButton.addEventListener("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -383,9 +348,6 @@
 			}
 		});
 
-		previewContainer.appendChild(previewLabel);
-		previewContainer.appendChild(previewText);
-
 		inputContainer.appendChild(input);
 		inputContainer.appendChild(emojiButton);
 		inputContainer.appendChild(charCounter);
@@ -404,17 +366,18 @@
 
 		const compressionLabel = document.createElement("label");
 		compressionLabel.htmlFor = "compression-checkbox";
-		compressionLabel.textContent = "Sử dụng ký tự thu nhỏ (hiển thị được nhiều hơn)";
+		compressionLabel.textContent = "Sử dụng ký tự thu nhỏ";
 		compressionLabel.style.cssText = "font-size: 13px; color: #555;";
 
 		compressionOption.appendChild(compressionCheckbox);
 		compressionOption.appendChild(compressionLabel);
-
 		compressionCheckbox.addEventListener("change", () => {
 			previewText.textContent = compressionCheckbox.checked ? compressText(input.value) : input.value;
 		});
 
 		optionsContainer.appendChild(compressionOption);
+		previewContainer.appendChild(previewLabel);
+		previewContainer.appendChild(previewText);
 
 		const buttonContainer = document.createElement("div");
 		buttonContainer.style.cssText = "display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px;";
@@ -431,15 +394,9 @@
 			cursor: pointer;
 			transition: background-color 0.2s;
 		`;
-		cancelButton.onmouseover = () => {
-			cancelButton.style.backgroundColor = "#e0e0e0";
-		};
-		cancelButton.onmouseout = () => {
-			cancelButton.style.backgroundColor = "#f5f5f5";
-		};
-		cancelButton.onclick = () => {
-			hidePopup();
-		};
+		cancelButton.onmouseover = () => cancelButton.style.backgroundColor = "#e0e0e0";
+		cancelButton.onmouseout = () => cancelButton.style.backgroundColor = "#f5f5f5";
+		cancelButton.onclick = () => hidePopup();
 
 		const confirmButton = document.createElement("button");
 		confirmButton.textContent = "Gửi";
@@ -453,17 +410,11 @@
 			cursor: pointer;
 			transition: background-color 0.2s;
 		`;
-		confirmButton.onmouseover = () => {
-			confirmButton.style.backgroundColor = "#1976D2";
-		};
-		confirmButton.onmouseout = () => {
-			confirmButton.style.backgroundColor = "#2196F3";
-		};
+		confirmButton.onmouseover = () => confirmButton.style.backgroundColor = "#1976D2";
+		confirmButton.onmouseout = () => confirmButton.style.backgroundColor = "#2196F3";
 
 		input.addEventListener("keydown", (e) => {
-			if (e.key === "Enter") {
-				confirmButton.click();
-			}
+			if (e.key === "Enter") confirmButton.click();
 		});
 
 		buttonContainer.appendChild(cancelButton);
@@ -489,9 +440,7 @@
 			animation: fadeIn 0.2s ease-out;
 		`;
 		overlay.addEventListener("click", (e) => {
-			if (e.target === overlay) {
-				hidePopup();
-			}
+			if (e.target === overlay) hidePopup();
 		});
 
 		const hidePopup = () => {
@@ -527,11 +476,9 @@
 		style.textContent = `
 			.reaction-emoji-list {
 				display: flex !important;
-				max-width: 350px !important;
-				justify-content: center !important;
-				padding: 8px 10px !important;
-				gap: 8px !important;
-				border-radius: 24px !important;
+				width: fit-content !important;
+				gap: 2px !important;
+				border-radius: 28px !important;
 				background-color: white !important;
 				box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
 			}
@@ -539,8 +486,7 @@
 				display: flex !important;
 				align-items: center !important;
 				justify-content: center !important;
-				width: 34px !important;
-				height: 34px !important;
+				font-size: 20px !important;
 				border-radius: 50% !important;
 				cursor: pointer !important;
 				background-color: rgba(240, 240, 240, 0.5) !important;
@@ -553,11 +499,11 @@
 				max-width: 3ch !important;
 			}
 			.reaction-emoji-icon:hover {
-				transform: scale(1.15) !important;
+				transform: scale(1.1) !important;
 				background-color: #e3f2fd !important;
 			}
 			.emoji-list-wrapper {
-				padding: 3px !important;
+				padding: 0.07rem !important;
 			}
 			@keyframes fadeIn {
 				from { opacity: 0; }
@@ -567,17 +513,6 @@
 				0% { transform: scale(0.8); opacity: 0; }
 				70% { transform: scale(1.05); opacity: 1; }
 				100% { transform: scale(1); opacity: 1; }
-			}
-			.msg-reaction-icon.extended-reaction {
-				min-width: auto !important;
-				max-width: none !important;
-				padding: 2px 6px !important;
-			}
-			.msg-reaction-icon.extended-reaction span {
-				font-size: 13px !important;
-				white-space: nowrap !important;
-				overflow: visible !important;
-				text-overflow: clip !important;
 			}
 		`;
 		document.head.appendChild(style);
@@ -593,29 +528,22 @@
 						if (wrapper) {
 							const btn = wrapper.querySelector('[id^="reaction-btn-"]');
 							const id = btn?.id.replace("reaction-btn-", "");
-
 							list.style.animation = "popIn 0.3s ease-out forwards";
 
 							reactions.forEach((react, idx) => {
 								const div = document.createElement("div");
 								const divEmoji = document.createElement("span");
 								div.className = "reaction-emoji-icon";
-								if (react.icon.length > 2) {
-									div.className += " reaction-emoji-text";
-								}
+								if (react.icon.length > 2) div.className += " reaction-emoji-text";
 								div.setAttribute("data-custom", "true");
 								div.style.animationDelay = `${50 * (idx + 7)}ms`;
 
 								if (react.name === "send_custom") {
 									divEmoji.innerText = react.icon;
-									divEmoji.style.cssText = "font-size: 18px;";
 									div.title = "Gửi reaction tùy chỉnh";
 								} else {
-									if (react.icon.length > 2) {
-										div.title = react.originalText || react.icon;
-									}
+									if (react.icon.length > 2) div.title = react.originalText || react.icon;
 									divEmoji.innerText = react.icon;
-									divEmoji.style.cssText = "font-size: 20px;";
 								}
 
 								div.appendChild(divEmoji);
@@ -625,20 +553,14 @@
 									e.stopPropagation();
 
 									if (react.name === "send_custom") {
-										if (!window.textInputPopup) {
-											window.textInputPopup = createTextInputPopup();
-										}
+										if (!window.textInputPopup) window.textInputPopup = createTextInputPopup();
 										window.textInputPopup.show();
 										window.currentReactionContext = { wrapper, id };
 
 										window.textInputPopup.confirmButton.onclick = () => {
 											const customText = window.textInputPopup.input.value.trim();
 											if (customText) {
-												let finalText = customText;
-												if (window.textInputPopup.compressionCheckbox.checked) {
-													finalText = compressText(customText);
-												}
-												finalText = insertSpecialCharacters(finalText);
+												const finalText = window.textInputPopup.compressionCheckbox.checked ? compressText(customText) : customText;
 												const customReaction = {
 													...react,
 													icon: finalText,
@@ -660,7 +582,6 @@
 				});
 			}, 50);
 		}
-		enhanceExistingReactions();
 	}));
 
 	function sendReaction(wrapper, id, react) {
@@ -669,24 +590,11 @@
 			return null;
 		};
 
-		const reactionPayload = {
-			rType: react.type,
-			rIcon: react.icon,
-			rData: {
-				originalText: react.originalText || react.icon,
-				fullData: true
-			}
-		};
-
 		let fiber = getReactFiber(wrapper);
 		if (fiber) {
 			while (fiber) {
 				if (fiber.memoizedProps?.sendReaction) {
-					try {
-						fiber.memoizedProps.sendReaction(reactionPayload);
-					} catch (e) {
-						fiber.memoizedProps.sendReaction({rType: react.type, rIcon: react.icon});
-					}
+					fiber.memoizedProps.sendReaction({ rType: react.type, rIcon: react.icon });
 					id && updateBtn(id, react);
 					break;
 				}
@@ -697,17 +605,10 @@
 		if (window.S?.default?.reactionMsgInfo) {
 			const msg = wrapper.closest(".msg-item");
 			const msgFiber = msg && getReactFiber(msg);
-			try {
-				msgFiber?.memoizedProps?.sendReaction(reactionPayload);
-			} catch (e) {
-				msgFiber?.memoizedProps?.sendReaction({rType: react.type, rIcon: react.icon});
-			}
+			msgFiber?.memoizedProps?.sendReaction({ rType: react.type, rIcon: react.icon });
 			id && updateBtn(id, react);
 			wrapper.classList.add("hide-elist");
 			wrapper.classList.remove("show-elist");
-			if (msg) {
-				msg.setAttribute("data-full-reaction", react.originalText || react.icon);
-			}
 		}
 	}
 
@@ -715,13 +616,11 @@
 		const span = document.querySelector(`#reaction-btn-${id} span`);
 		if (span) {
 			span.innerHTML = "";
-			if (react.name === "send_custom" || react.icon.length > 2) {
+			if (react.name === "send_custom" || typeof react.icon === "string" && react.icon.length > 2) {
 				const textContainer = document.createElement("div");
 				textContainer.className = "text-reaction";
 				textContainer.textContent = react.icon;
-				if (react.originalText) {
-					textContainer.setAttribute("data-original-text", react.originalText);
-				}
+				if (react.originalText) textContainer.setAttribute("data-original-text", react.originalText);
 				span.appendChild(textContainer);
 			} else {
 				const emoji = document.createElement("span");
@@ -737,24 +636,10 @@
 		}
 	}
 
-	function enhanceExistingReactions() {
-		document.querySelectorAll(".msg-reaction-icon").forEach(reactionEl => {
-			if (!reactionEl.hasAttribute("data-enhanced")) {
-				reactionEl.setAttribute("data-enhanced", "true");
-				if (reactionEl.textContent.trim().length > 1 && !['👍', '❤️', '😆', '😮', '😢', '😠'].includes(reactionEl.textContent.trim())) {
-					reactionEl.classList.add("extended-reaction");
-					const fullText = reactionEl.closest('.msg-item')?.getAttribute('data-full-reaction') || reactionEl.textContent.trim();
-					reactionEl.title = fullText;
-					reactionEl.setAttribute("data-original-text", fullText);
-				}
-			}
-		});
-	}
-
 	function initReactions() {
 		if (window.S?.default) {
 			if (!window.S.default.reactionMsgInfo.some(r => r.rType >= 100)) {
-				window.S.default.reactionMsgInfo = [...window.S.default.reactionMsgInfo, ...reactions.map(r => ({rType: r.type, rIcon: r.icon, name: r.name}))];
+				window.S.default.reactionMsgInfo = [...window.S.default.reactionMsgInfo, ...reactions.map(r => ({ rType: r.type, rIcon: r.icon, name: r.name }))];
 			}
 		} else setTimeout(initReactions, 1000);
 	}
@@ -784,7 +669,7 @@
 			font-size: 12px;
 			font-weight: 600;
 			color: #1976d2;
-			max-width: fit-content;
+			max-width: 120px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -807,34 +692,14 @@
 			animation: fadeIn 0.2s forwards;
 			z-index: 9999;
 		}
-		.extended-reaction {
-			position: relative;
-			cursor: pointer;
-		}
-		.extended-reaction:hover::before {
-			content: attr(title);
-			position: absolute;
-			bottom: 100%;
-			left: 50%;
-			transform: translateX(-50%);
-			background-color: rgba(0,0,0,0.7);
-			color: white;
-			padding: 4px 8px;
-			border-radius: 4px;
-			font-size: 12px;
-			white-space: nowrap;
-			z-index: 999;
-			margin-bottom: 5px;
-		}
 	`;
 	document.head.appendChild(style);
 
 	const init = () => {
-		observer.observe(document.body, {childList: true, subtree: true});
+		observer.observe(document.body, { childList: true, subtree: true });
 		initReactions();
 		enhanceReactionPanel();
 		RecentlyReaction.load();
-		setInterval(enhanceExistingReactions, 2000);
 	};
 	"loading" === document.readyState ? document.addEventListener("DOMContentLoaded", init) : init();
 })();

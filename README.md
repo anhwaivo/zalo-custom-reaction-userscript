@@ -1,4 +1,8 @@
-zalỏ custom reaction userscript
+
+
+Zalo custom reaction userscript
+
+⚠️ **Lưu ý:** Script chỉ hoạt động trên Zalo Web ([chat.zalo.me](https://chat.zalo.me)).
 
 [about zalo custom reaction](https://web.facebook.com/share/p/1V5uSkRncu/)
 
